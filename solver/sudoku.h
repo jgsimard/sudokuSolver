@@ -8,17 +8,17 @@
 #include <algorithm>
 #include <fstream>
 
-using cell_type = int; //using __int8 or short slows the program
+using cell_type = int32_t; //using __int8 or short slows the program
 
 const int nb_threads = 9;
 const cell_type size = 9;
 
-class sudoku
+class Sudoku
 {
 public:
 	static int steps;
-	sudoku(const std::string& sudoku_string);
-	sudoku();
+	Sudoku(const std::string& sudoku_string);
+	Sudoku();
 	void print() const;
 	bool solve();
 	void load(const std::string& sudoku_string);
@@ -28,7 +28,7 @@ private:
 	cell_type grid[size][size];
 	cell_type posibilities[size][size];
 	
-	bool add_works(cell_type& num, cell_type& row, cell_type& col) const;
+	bool add_works(const cell_type& num, const cell_type& row, const cell_type& col) const;
 
 	bool solve_recursive();
 	bool find_nb_possibilities(cell_type& row, cell_type& col, bool& remaining);
@@ -37,11 +37,8 @@ private:
 	bool solve_recursive2();
 	bool find_nb_possibilities2(cell_type& row, cell_type& col, bool& remaining, std::vector<cell_type>& pos);
 
-	double time_ms;
+	double _time_ms;
 	std::vector<int*> sq[3][3];
-	void square_formation();
-	//bool solve_recursive_multithread();
-	//std::thread threads[nb_threads];
 };
 
 

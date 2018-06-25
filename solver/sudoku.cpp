@@ -1,23 +1,24 @@
 #include "stdafx.h"
-#include "sudoku.h"
+#include "Sudoku.h"
 #include <string>
 
-int sudoku::steps = 0;
+int Sudoku::steps = 0;
 
-sudoku::sudoku(const std::string& sudoku_string)
+Sudoku::Sudoku(const std::string& sudoku_string)
 {
-	square_formation();
+	//square_formation();
 	load(sudoku_string);
 	print();
 	if (solve()) {
-		std::cout << "Elapsed time (ms): "<< time_ms << std::endl;
+		std::cout << "Elapsed time (ms): "<< _time_ms << std::endl;
 		print();
 	}
 	else
 		std::cout << "Unable to solve" << std::endl;
 }
-sudoku::sudoku() { square_formation(); }
-void sudoku::load(const std::string& sudoku_string) {
+Sudoku::Sudoku() {}// { square_formation(); }
+
+void Sudoku::load(const std::string& sudoku_string) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			int value = sudoku_string[i*size + j] == '.' ? 0 : sudoku_string[i*size + j] - '0';
@@ -26,31 +27,41 @@ void sudoku::load(const std::string& sudoku_string) {
 		}
 	}
 }
-void sudoku::print() const
+
+
+void Sudoku::print() const
 {
 	std::cout << "print : " << steps << std::endl;
 	for (int i = 0; i < size; i++) {
+		if (i % 3 == 0 && i != 0)
+			std::cout << "----------------------------------\n";
 		for (int j = 0; j < size; j++) {
+			if (j % 3 == 0 && j != 0)
+				std::cout << " | ";
+
 			if (grid[i][j] == 0)
-				std::cout << ' ';
+				std::cout << " ? ";
 			else
-				std::cout << grid[i][j];
+				std::cout << " " << grid[i][j] << " ";
 		}
 		std::cout << "\n";
 	}
 	std::cout << "\n";
 }
-double sudoku::get_solve_duration(){return time_ms;}
-bool sudoku::solve() 
+
+double Sudoku::get_solve_duration(){return _time_ms;}
+
+bool Sudoku::solve() 
 {
-	auto begin = std::chrono::high_resolution_clock ::now();
+	using namespace std::chrono;
+	auto begin = high_resolution_clock::now();
 	if (solve_recursive()) {
-		time_ms = (double)std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - begin).count()/1000;
+		_time_ms = (double)duration_cast<microseconds>(high_resolution_clock::now() - begin).count() / 1000;
 		return true;
 	}
 	return false;	
 }
-bool sudoku::solve_recursive()
+bool Sudoku::solve_recursive()
 {
 	steps++;
 	cell_type row, col;
@@ -68,7 +79,7 @@ bool sudoku::solve_recursive()
 	}
 	return false;
 }
-bool sudoku::solve_recursive2()
+bool Sudoku::solve_recursive2()
 {
 	steps++;
 	cell_type row, col;
@@ -85,7 +96,8 @@ bool sudoku::solve_recursive2()
 	}
 	return false;
 }
-void sudoku::square_formation() {
+/*
+void Sudoku::square_formation() {
 	
 	for (int i = 0; i < 3; ++i) {
 		for (int j = 0; j < 3; ++j) {
@@ -95,7 +107,8 @@ void sudoku::square_formation() {
 		}
 	}
 }
-bool sudoku::add_works(cell_type& num, cell_type& row, cell_type& col) const
+*/
+bool Sudoku::add_works(const cell_type& num, const cell_type& row, const cell_type& col) const
 {
 	const cell_type s_row = (row / 3) * 3; // 0,1,2 => 0, 3,4,5 => 3, 6,7,8 => 6 
 	const cell_type s_col = (col / 3) * 3;
@@ -108,7 +121,7 @@ bool sudoku::add_works(cell_type& num, cell_type& row, cell_type& col) const
 	}
 	return true;
 }
-bool sudoku::find_nb_possibilities(cell_type& row, cell_type& col, bool& is_grid_complete)
+bool Sudoku::find_nb_possibilities(cell_type& row, cell_type& col, bool& is_grid_complete)
 {
 	int min = 10;
 	is_grid_complete = true;
@@ -134,7 +147,7 @@ bool sudoku::find_nb_possibilities(cell_type& row, cell_type& col, bool& is_grid
 	}
 	return true;
 }
-bool sudoku::find_nb_possibilities2(cell_type& row, cell_type& col, bool& remaining, std::vector<cell_type>&pos)
+bool Sudoku::find_nb_possibilities2(cell_type& row, cell_type& col, bool& remaining, std::vector<cell_type>&pos)
 {
 	int min = 10;
 	std::vector<cell_type> temp(4);

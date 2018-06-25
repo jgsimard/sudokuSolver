@@ -10,6 +10,7 @@ class SudokuStats
 {
 public:
 	SudokuStats();
+	SudokuStats(const std::string& filename);
 	void get_stats(const std::string& filename);
 	~SudokuStats();
 

@@ -27,6 +27,11 @@ private:
 	std::queue<T> _queue;
 	std::condition_variable _condition;
 };
+template <typename T>
+QueueThreadSafe<T>::QueueThreadSafe() {}
+
+template <typename T>
+QueueThreadSafe<T>::~QueueThreadSafe<T>() { invalidate(); }
 
 /*
 Try  to get first value in queue
@@ -42,14 +47,10 @@ bool QueueThreadSafe<T>::tryPop(T& out)
 	return true;
 }
 
-template <typename T>
-QueueThreadSafe<T>::QueueThreadSafe() {}
-
-template <typename T>
-QueueThreadSafe<T>::~QueueThreadSafe<T>(){invalidate();}
 /*
 Get first value in queue
-Waits until possible
+Waits until possible,
+all threads are blocked at the condition.wait and one thread at the time 
 */
 template <typename T> 
 bool QueueThreadSafe<T>::waitPop(T& out)

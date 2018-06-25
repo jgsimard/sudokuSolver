@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "SudokuStats.h"
 
-
 SudokuStats::SudokuStats()
 {
 }
@@ -9,6 +8,11 @@ SudokuStats::SudokuStats()
 
 SudokuStats::~SudokuStats()
 {
+}
+
+SudokuStats::SudokuStats(const std::string& filename)
+{
+	get_stats(filename);
 }
 
 void SudokuStats::load_txt(const std::string& filename)
@@ -34,10 +38,15 @@ void SudokuStats::print_stats()
 	mean_stdev();
 	std::cout << "Stats : \n" <<
 		"Number : " << sudokus_to_solve.size() << std::endl <<
-		"Mean solving time : "  << mean															<< " ms \n" <<
+		"Mean solving time : " << mean << " ms \n" <<
 		"Stdev solving time : " << stdev														<< " ms \n" <<
 		"Max solving time : "   << *std::max_element(std::begin(times_ms), std::end(times_ms))	<< " ms \n" <<
 		"Min solving time : "   << *std::min_element(std::begin(times_ms), std::end(times_ms))	<< " ms \n";
+
+	std::sort(times_ms.begin(), times_ms.end());
+	for (auto i = times_ms.begin(); i != times_ms.end(); ++i)
+		std::cout << *i << ' ';
+	std::cout << std::endl;
 }
 
 void SudokuStats::get_stats(const std::string& filename)
@@ -47,10 +56,6 @@ void SudokuStats::get_stats(const std::string& filename)
 	load_txt(filename);
 	solve_all();
 	print_stats();
-	std::sort(times_ms.begin(), times_ms.end());
-	for (auto i = times_ms.begin(); i != times_ms.end(); ++i)
-		std::cout << *i << ' ';
-	std::cout << std::endl;
 }
 
 void SudokuStats::mean_stdev()

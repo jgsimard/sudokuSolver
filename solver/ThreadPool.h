@@ -52,7 +52,11 @@ private:
 	private:
 		Func _func;
 	};
+
+	
+
 public:
+
 	template <typename T>
 	class TaskFuture
 	{
@@ -66,9 +70,8 @@ public:
 		auto get();
 	private:
 		std::future<T> _future;
-
-
 	};
+
 	ThreadPool();
 	~ThreadPool();
 	explicit ThreadPool(const std::uint32_t numThreads);
@@ -78,8 +81,6 @@ public:
 	template <typename Func, typename... Args>
 	auto submit(Func&& func, Args&&... args);
 
-
-
 private:
 	void worker();
 	void destroy();
@@ -88,6 +89,8 @@ private:
 	QueueThreadSafe <std::unique_ptr<IThreadTask>> _work_queue;
 	std::vector<std::thread> _threads;
 
+	unsigned _n_running_jobs;
+	std::vector<ThreadPool::TaskFuture<void>> _jobs;
 };
 //Helper function
 ThreadPool& get_ThreadPool()
@@ -99,7 +102,7 @@ ThreadPool& get_ThreadPool()
 template <typename Func, typename... Args>
 inline auto submit_job(Func&& func, Args... args)
 {
-	return get_ThreadPool().submit(std::foward<Func>(func), std::forward<Args>(args)...);
+	return get_ThreadPool().submit(std::forward<Func>(func), std::forward<Args>(args)...);
 }
 
 //Implementation
@@ -131,7 +134,7 @@ ThreadPool::~ThreadPool() { destroy(); }
 template <typename Func, typename... Args>
 auto ThreadPool::submit(Func&& func, Args&&... args)
 {
-	auto boundTask = std::bind(std::foward<Func>(func), std::foward<Args>(args)...);
+	auto boundTask = std::bind(std::forward<Func>(func), std::forward<Args>(args)...);
 	using ResultType = std::result_of_t<decltype(boundTask)()>;
 	using PackagedTask = std::packaged_task<ResultType()>;
 	using TaskType = ThreadTask<PackagedTask>;

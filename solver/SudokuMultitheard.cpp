@@ -2,10 +2,10 @@
 #include "SudokuMultitheard.h"
 
 
-SudokuMultitheard::SudokuMultitheard()
+
+SudokuMultitheard::SudokuMultitheard(const std::string & sudoku_string) : sudoku(sudoku_string)
 {
 }
-
 
 SudokuMultitheard::~SudokuMultitheard()
 {

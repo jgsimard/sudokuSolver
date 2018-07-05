@@ -30,16 +30,13 @@
     <ClInclude Include="Sudoku2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SudokuStats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ThreadPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SudokuMultitheard.h">
+    <ClInclude Include="Stats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LearningC11.h">
+    <ClInclude Include="AbstractSudoku.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,13 +53,10 @@
     <ClCompile Include="Sudoku2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SudokuStats.cpp">
+    <ClCompile Include="Stats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SudokuMultitheard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LearningC11.cpp">
+    <ClCompile Include="AbstractSudoku.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

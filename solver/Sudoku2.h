@@ -5,38 +5,30 @@
 #include <fstream>
 #include <string>
 
+#include "Possible.h"
 #include "Sudoku.h"
-
-const int nb_cell = 81;
-
-class Sudoku2 : public Sudoku 
+namespace sudoku
 {
-public:
-	Sudoku2();
-	~Sudoku2();
+	const int nb_cell = 81;
 
-	bool is_solved() const;
+	class Sudoku2 : public Sudoku
+	{
+	public:
+		Sudoku2();
+		~Sudoku2();
 
-	std::vector<Possible> _cells;
-	std::vector<std::vector<Possible*>> _groups;
+	protected:
+		int lowest_count_cell();
+		void update_group(int& index, const bool& value);
+		bool solve_recursive();
+		bool find_possibilities();
+		bool is_solved() const;
+		void make_groups();
+		bool add_works(const int & num, const int & index) const;
 
-	void make_groups();
-
-	bool add_works(const int & num, const int & index) const;
-
-};
-
-class Possible {
-	
-public:
-	Possible();
-	bool is_on(int& i) const;
-	int count() const;
-	void eliminate(int& i);
-	int val() const;
-	std::string str(int& w) const;
-private:
-	std::vector<bool> _b;
-	
-};
-
+		bool update_possibilities();
+		
+		std::vector<Possible> _cells;
+		std::vector<std::vector<Possible*>> _groups;
+	};
+}

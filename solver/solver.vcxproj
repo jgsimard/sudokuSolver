@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -148,19 +148,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="LearningC11.h" />
+    <ClInclude Include="AbstractSudoku.h" />
+    <ClInclude Include="Possible.h" />
     <ClInclude Include="QueueThreadSafe.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="sudoku.h" />
     <ClInclude Include="Sudoku2.h" />
-    <ClInclude Include="SudokuMultitheard.h" />
-    <ClInclude Include="SudokuStats.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LearningC11.cpp" />
+    <ClCompile Include="AbstractSudoku.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Possible.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -169,8 +170,7 @@
     </ClCompile>
     <ClCompile Include="sudoku.cpp" />
     <ClCompile Include="Sudoku2.cpp" />
-    <ClCompile Include="SudokuMultitheard.cpp" />
-    <ClCompile Include="SudokuStats.cpp" />
+    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="hardest.txt" />
